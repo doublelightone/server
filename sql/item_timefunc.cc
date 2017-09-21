@@ -1761,6 +1761,18 @@ void Item_func_now_utc::store_now_in_TIME(THD *thd, MYSQL_TIME *now_time)
 }
 
 
+int Item_func_now::save_in_field(Field *field, bool no_conversions)
+{
+  if (field->type() == MYSQL_TYPE_TIMESTAMP)
+  {
+    ((Field_timestamp*)field)->set_time();
+    return 0;
+  }
+  else
+    return Item_temporal_func::save_in_field(field, no_conversions);
+}
+
+
 bool Item_func_now::get_date(MYSQL_TIME *res,
                              ulonglong fuzzy_date __attribute__((unused)))
 {

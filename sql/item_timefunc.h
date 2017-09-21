@@ -729,6 +729,7 @@ public:
   Item_func_now(THD *thd, uint dec): Item_datetimefunc(thd), last_query_id(0)
   { decimals= dec; }
   bool fix_fields(THD *, Item **);
+  int save_in_field(Field *field, bool no_conversions);
   bool get_date(MYSQL_TIME *res, ulonglong fuzzy_date);
   virtual void store_now_in_TIME(THD *thd, MYSQL_TIME *now_time)=0;
   bool check_vcol_func_processor(void *arg)
