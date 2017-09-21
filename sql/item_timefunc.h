@@ -729,6 +729,7 @@ public:
   Item_func_now(THD *thd, uint dec): Item_datetimefunc(thd), last_query_id(0)
   { decimals= dec; }
   bool fix_fields(THD *, Item **);
+  int save_in_field(Field *field, bool no_conversions);
   bool get_date(MYSQL_TIME *res, ulonglong fuzzy_date);
   virtual void store_now_in_TIME(THD *thd, MYSQL_TIME *now_time)=0;
   bool check_vcol_func_processor(void *arg)
@@ -782,6 +783,7 @@ public:
   Item_func_sysdate_local(THD *thd, uint dec): Item_func_now(thd, dec) {}
   bool const_item() const { return 0; }
   const char *func_name() const { return "sysdate"; }
+  int save_in_field(Field *field, bool no_conversions);
   void store_now_in_TIME(THD *thd, MYSQL_TIME *now_time);
   bool get_date(MYSQL_TIME *res, ulonglong fuzzy_date);
   table_map used_tables() const { return RAND_TABLE_BIT; }

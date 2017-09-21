@@ -1761,6 +1761,24 @@ void Item_func_now_utc::store_now_in_TIME(THD *thd, MYSQL_TIME *now_time)
 }
 
 
+int Item_func_now::save_in_field(Field *field, bool no_conversions)
+{
+  if (field->type() == MYSQL_TYPE_TIMESTAMP)
+  {
+    THD *thd= field->get_thd();
+    my_time_t ts= thd->query_start();
+    uint dec= MY_MIN(decimals, field->decimals());
+    ulong sec_part= dec ? thd->query_start_sec_part() : 0;
+    sec_part-= my_time_fraction_remainder(sec_part, dec);
+    field->set_notnull();
+    ((Field_timestamp*)field)->store_TIME(ts, sec_part);
+    return 0;
+  }
+  else
+    return Item_temporal_func::save_in_field(field, no_conversions);
+}
+
+
 bool Item_func_now::get_date(MYSQL_TIME *res,
                              ulonglong fuzzy_date __attribute__((unused)))
 {
@@ -1774,6 +1792,22 @@ bool Item_func_now::get_date(MYSQL_TIME *res,
   }
   *res= ltime;
   return 0;
+}
+
+int  Item_func_sysdate_local::save_in_field(Field *field, bool no_conversions)
+{
+  if (field->type() == MYSQL_TYPE_TIMESTAMP)
+  {
+    my_hrtime_t now= my_hrtime();
+    ulong sec_part= hrtime_sec_part(now);
+    sec_part-= my_time_fraction_remainder(sec_part, decimals);
+    field->set_notnull();
+    ((Field_timestamp*)field)->store_TIME(hrtime_to_my_time(now), sec_part);
+    return 0;
+
+  }
+  else
+    return Item_temporal_func::save_in_field(field, no_conversions);
 }
 
 
