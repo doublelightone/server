@@ -272,7 +272,7 @@ net_send_ok(THD *thd,
   if (state_changed || (message && message[0]))
   {
     DBUG_ASSERT(safe_strlen(message) <= MYSQL_ERRMSG_SIZE);
-    store.q_net_store_data((uchar*) safe_str(message), safe_strlen(message));
+    store.q_net_store_data((uchar*) safe_str(message), (uint)safe_strlen(message));
   }
 
   if (unlikely(state_changed))

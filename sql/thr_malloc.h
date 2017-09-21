@@ -22,9 +22,9 @@ typedef struct st_mem_root MEM_ROOT;
 
 void init_sql_alloc(MEM_ROOT *root, uint block_size, uint pre_alloc_size,
                     myf my_flags);
-char *sql_strmake_with_convert(THD *thd, const char *str, size_t arg_length,
+char *sql_strmake_with_convert(THD *thd, const char *str, uint arg_length,
 			       CHARSET_INFO *from_cs,
-			       size_t max_res_length,
-			       CHARSET_INFO *to_cs, size_t *result_length);
+			       uint max_res_length,
+			       CHARSET_INFO *to_cs, uint *result_length);
 
 #endif /* THR_MALLOC_INCLUDED */

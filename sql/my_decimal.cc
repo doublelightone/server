@@ -238,7 +238,7 @@ int my_decimal2binary(uint mask, const my_decimal *d, uchar *bin, int prec,
     E_DEC_OOM
 */
 
-int str2my_decimal(uint mask, const char *from, uint length,
+int str2my_decimal(uint mask, const char *from, size_t length,
                    CHARSET_INFO *charset, my_decimal *decimal_value,
                    const char **end_ptr)
 {
@@ -247,7 +247,7 @@ int str2my_decimal(uint mask, const char *from, uint length,
   {
     StringBuffer<STRING_BUFFER_USUAL_SIZE> tmp;
     uint dummy_errors;
-    tmp.copy(from, length, charset, &my_charset_latin1, &dummy_errors);
+    tmp.copy(from, (uint32)length, charset, &my_charset_latin1, &dummy_errors);
     char *end= (char*) tmp.end();
     err= string2decimal(tmp.ptr(), (decimal_t*) decimal_value, &end);
     *end_ptr= from + charset->mbminlen * (size_t) (end - tmp.ptr());

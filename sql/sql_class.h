@@ -175,11 +175,11 @@ public:
   {
     DBUG_ASSERT(cs_arg != NULL);
     string.str= str_arg;
-    string.length= length_arg;
+    string.length= (uint)length_arg;
   }
 
   inline char *str() const { return string.str; }
-  inline size_t length() const { return string.length; }
+  inline uint length() const { return string.length; }
   CHARSET_INFO *charset() const { return cs; }
 
   friend LEX_STRING * thd_query_string (MYSQL_THD thd);
@@ -238,7 +238,7 @@ public:
   Key_part_spec(const LEX_STRING &name, uint len)
     : field_name(name), length(len)
   {}
-  Key_part_spec(const char *name, const size_t name_len, uint len)
+  Key_part_spec(const char *name, uint name_len, uint len)
     : length(len)
   { field_name.str= (char *)name; field_name.length= name_len; }
   bool operator==(const Key_part_spec& other) const;
@@ -332,7 +332,7 @@ public:
     option_list(create_opt), generated(generated_arg)
   {
     name.str= (char *)name_arg;
-    name.length= name_len_arg;
+    name.length= (uint)name_len_arg;
   }
   Key(const Key &rhs, MEM_ROOT *mem_root);
   virtual ~Key() {}
@@ -1110,7 +1110,7 @@ public:
   */
 
   char *db;
-  size_t db_length;
+  uint db_length;
 
   /* This is set to 1 of last call to send_result_to_client() was ok */
   my_bool query_cache_is_applicable;
@@ -3825,12 +3825,12 @@ public:
       else
         db= NULL;
     }
-    db_length= db ? new_db_len : 0;
+    db_length= db ? (uint)new_db_len : 0;
     bool result= new_db && !db;
     mysql_mutex_unlock(&LOCK_thd_data);
 #ifdef HAVE_PSI_THREAD_INTERFACE
     if (result)
-      PSI_THREAD_CALL(set_thread_db)(new_db, new_db_len);
+      PSI_THREAD_CALL(set_thread_db)(new_db, (int)new_db_len);
 #endif
     return result;
   }
@@ -3852,10 +3852,10 @@ public:
     {
       mysql_mutex_lock(&LOCK_thd_data);
       db= new_db;
-      db_length= new_db_len;
+      db_length= (uint)new_db_len;
       mysql_mutex_unlock(&LOCK_thd_data);
 #ifdef HAVE_PSI_THREAD_INTERFACE
-      PSI_THREAD_CALL(set_thread_db)(new_db, new_db_len);
+      PSI_THREAD_CALL(set_thread_db)(new_db,db_length);
 #endif
     }
   }
@@ -3864,7 +3864,7 @@ public:
     allocate memory for a deep copy: current database may be freed after
     a statement is parsed but before it's executed.
   */
-  bool copy_db_to(char **p_db, size_t *p_db_length)
+  bool copy_db_to(char **p_db, uint *p_db_length)
   {
     if (db == NULL)
     {
@@ -3872,7 +3872,8 @@ public:
       return TRUE;
     }
     *p_db= strmake(db, db_length);
-    *p_db_length= db_length;
+    if (p_db_length)
+      *p_db_length= (uint)db_length;
     return FALSE;
   }
   thd_scheduler event_scheduler;

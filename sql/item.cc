@@ -756,7 +756,7 @@ Item_ident::Item_ident(THD *thd, Name_resolution_context *context_arg,
    cached_table(0), depended_from(0), can_be_depended(TRUE)
 {
   name = (char*) field_name_arg;
-  name_length= name ? strlen(name) : 0;
+  name_length= name ? (uint)strlen(name) : 0;
 }
 
 
@@ -770,7 +770,7 @@ Item_ident::Item_ident(THD *thd, TABLE_LIST *view_arg, const char *field_name_ar
    cached_table(NULL), depended_from(NULL), can_be_depended(TRUE)
 {
   name = (char*) field_name_arg;
-  name_length= name ? strlen(name) : 0;
+  name_length= name ? (uint)strlen(name) : 0;
 }
 
 
@@ -1051,7 +1051,7 @@ void Item::set_name(THD *thd, const char *str, uint length, CHARSET_INFO *cs)
   if (!cs->ctype || cs->mbminlen > 1)
   {
     str+= cs->cset->scan(cs, str, str + length, MY_SEQ_SPACES);
-    length-= str - str_start;
+    length-= (uint)(str - str_start);
   }
   else
   {
@@ -1084,11 +1084,9 @@ void Item::set_name(THD *thd, const char *str, uint length, CHARSET_INFO *cs)
   }
   if (!my_charset_same(cs, system_charset_info))
   {
-    size_t res_length;
     name= sql_strmake_with_convert(thd, str, length, cs,
 				   MAX_ALIAS_NAME, system_charset_info,
-				   &res_length);
-    name_length= res_length;
+				   &name_length);
   }
   else
     name= thd->strmake(str, (name_length= MY_MIN(length,MAX_ALIAS_NAME)));
@@ -1100,11 +1098,9 @@ void Item::set_name_no_truncate(THD *thd, const char *str, uint length,
 {
   if (!my_charset_same(cs, system_charset_info))
   {
-    size_t res_length;
     name= sql_strmake_with_convert(thd, str, length, cs,
 				   UINT_MAX, system_charset_info,
-				   &res_length);
-    name_length= res_length;
+				   &name_length);
   }
   else
     name= thd->strmake(str, (name_length= length));
@@ -9209,7 +9205,7 @@ bool Item_trigger_field::fix_fields(THD *thd, Item **items)
 
       if (check_grant_column(thd, table_grants, triggers->trigger_table->s->db.str,
                              triggers->trigger_table->s->table_name.str, field_name,
-                             strlen(field_name), thd->security_ctx))
+                             (uint)strlen(field_name), thd->security_ctx))
         return TRUE;
     }
 #endif // NO_EMBEDDED_ACCESS_CHECKS

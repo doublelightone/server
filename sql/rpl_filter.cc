@@ -722,7 +722,7 @@ Rpl_filter::rewrite_db_is_empty()
 
 
 const char*
-Rpl_filter::get_rewrite_db(const char* db, size_t *new_len)
+Rpl_filter::get_rewrite_db(const char* db, uint *new_len)
 {
   if (rewrite_db.is_empty() || !db)
     return db;

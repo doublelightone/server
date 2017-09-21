@@ -571,7 +571,7 @@ public:
   ErrConvString(const String *s)
     : ErrConv(), str(s->ptr()), len(s->length()), cs(s->charset()) {}
   const char *ptr() const
-  { return err_conv(err_buffer, sizeof(err_buffer), str, len, cs); }
+  { return err_conv(err_buffer, (uint)sizeof(err_buffer), str, (uint)len, cs); }
 };
 
 class ErrConvInteger : public ErrConv

@@ -11959,7 +11959,7 @@ int Table_map_log_event::do_apply_event(rpl_group_info *rgi)
 {
   RPL_TABLE_LIST *table_list;
   char *db_mem, *tname_mem;
-  size_t dummy_len;
+  uint dummy_len;
   void *memory;
   Rpl_filter *filter;
   Relay_log_info const *rli= rgi->rli;

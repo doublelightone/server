@@ -59,9 +59,9 @@ public:
                 char *table_name_arg, size_t table_name_len_arg)
   {
     db.str= db_arg;
-    db.length= db_len_arg;
+    db.length= (uint)db_len_arg;
     name.str= table_name_arg;
-    name.length= table_name_len_arg;
+    name.length= (uint)table_name_len_arg;
     m_child_def_version= ~0UL;
     m_child_table_ref_type= TABLE_REF_NULL;
   }

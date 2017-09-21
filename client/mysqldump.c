@@ -3305,10 +3305,10 @@ static void dump_trigger_old(FILE *sql_file, MYSQL_RES *show_triggers_rs,
       accessing it.
     */
 
-    size_t user_name_len;
+    uint user_name_len;
     char user_name_str[USERNAME_LENGTH + 1];
     char quoted_user_name_str[USERNAME_LENGTH * 2 + 3];
-    size_t host_name_len;
+    uint host_name_len;
     char host_name_str[HOSTNAME_LENGTH + 1];
     char quoted_host_name_str[HOSTNAME_LENGTH * 2 + 3];
 

@@ -7451,10 +7451,9 @@ alter_commands:
           WITH TABLE_SYM table_ident have_partitioning
           {
             LEX *lex= thd->lex;
-            size_t dummy;
             lex->select_lex.db=$6->db.str;
             if (lex->select_lex.db == NULL &&
-                lex->copy_db_to(&lex->select_lex.db, &dummy))
+                lex->copy_db_to(&lex->select_lex.db, 0))
             {
               MYSQL_YYABORT;
             }
@@ -7713,10 +7712,9 @@ alter_list_item:
         | RENAME opt_to table_ident
           {
             LEX *lex=Lex;
-            size_t dummy;
             lex->select_lex.db=$3->db.str;
             if (lex->select_lex.db == NULL &&
-                lex->copy_db_to(&lex->select_lex.db, &dummy))
+                lex->copy_db_to(&lex->select_lex.db, 0))
             {
               MYSQL_YYABORT;
             }
@@ -15870,8 +15868,7 @@ grant_ident:
           '*'
           {
             LEX *lex= Lex;
-            size_t dummy;
-            if (lex->copy_db_to(&lex->current_select->db, &dummy))
+            if (lex->copy_db_to(&lex->current_select->db, 0))
               MYSQL_YYABORT;
             if (lex->grant == GLOBAL_ACLS)
               lex->grant = DB_ACLS & ~GRANT_ACL;

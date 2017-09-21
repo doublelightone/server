@@ -860,7 +860,7 @@ static int find_keyword(Lex_input_stream *lip, uint len, bool function)
 bool is_keyword(const char *name, uint len)
 {
   DBUG_ASSERT(len != 0);
-  return get_hash_symbol(name,len,0)!=0;
+  return get_hash_symbol(name, len,0)!=0;
 }
 
 /**
@@ -3135,7 +3135,7 @@ uint8 LEX::get_effective_with_check(TABLE_LIST *view)
 */
 
 bool
-LEX::copy_db_to(char **p_db, size_t *p_db_length) const
+LEX::copy_db_to(char **p_db, uint *p_db_length) const
 {
   if (sphead && sphead->m_name.str)
   {

@@ -759,7 +759,7 @@ print_use_stmt(PRINT_EVENT_INFO* pinfo, const Query_log_event *ev)
   // Current db and required db are different.
   // Check for rewrite rule for required db. (Note that in a rewrite rule
   // neither db_from nor db_to part can be empty).
-  size_t len_to= 0;
+  uint len_to= 0;
   const char *db_to= binlog_filter->get_rewrite_db(db, &len_to);
 
   // If there is no rewrite rule for db (in this case len_to is left = 0),
@@ -1426,7 +1426,7 @@ Exit_status process_event(PRINT_EVENT_INFO *print_event_info, Log_event *ev,
       */
       print_annotate_event(print_event_info);
 
-      size_t len_to= 0;
+      uint len_to= 0;
       const char* db_to= binlog_filter->get_rewrite_db(map->get_db_name(), &len_to);
       if (len_to && map->rewrite_db(db_to, len_to, glob_description_event))
       {

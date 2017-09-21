@@ -208,14 +208,14 @@ extern ulonglong strtoull(const char *str, char **ptr, int base);
 
 #include <mysql/plugin.h>
 
-#define STRING_WITH_LEN(X) (X), ((size_t) (sizeof(X) - 1))
-#define USTRING_WITH_LEN(X) ((uchar*) X), ((size_t) (sizeof(X) - 1))
-#define C_STRING_WITH_LEN(X) ((char *) (X)), ((size_t) (sizeof(X) - 1))
+#define STRING_WITH_LEN(X) (X), ((uint) (sizeof(X) - 1))
+#define USTRING_WITH_LEN(X) ((uchar*) X), ((uint) (sizeof(X) - 1))
+#define C_STRING_WITH_LEN(X) ((char *) (X)), ((uint) (sizeof(X) - 1))
 
 struct st_mysql_const_lex_string
 {
   const char *str;
-  size_t length;
+  uint length;
 };
 typedef struct st_mysql_const_lex_string LEX_CSTRING;
 
@@ -223,14 +223,14 @@ typedef struct st_mysql_const_lex_string LEX_CSTRING;
 struct st_mysql_const_unsigned_lex_string
 {
   const uchar *str;
-  size_t length;
+  uint length;
 };
 typedef struct st_mysql_const_unsigned_lex_string LEX_CUSTRING;
 
 static inline void lex_string_set(LEX_STRING *lex_str, const char *c_str)
 {
   lex_str->str= (char *) c_str;
-  lex_str->length= strlen(c_str);
+  lex_str->length= (uint)strlen(c_str);
 }
 
 #ifdef __cplusplus

@@ -39,7 +39,7 @@
 
 /* First packet sent from server to client, contains srv_principal_name\0mech\0 */
 static char first_packet[PRINCIPAL_NAME_MAX + MECH_NAME_MAX +2];
-static int  first_packet_len;
+static size_t  first_packet_len;
 
 /*
  Target name in GSSAPI/SSPI , for Kerberos it is service principal name
@@ -68,7 +68,7 @@ static int gssapi_auth(MYSQL_PLUGIN_VIO *vio, MYSQL_SERVER_AUTH_INFO *auth_info)
   }
   
   /* Send first packet with target name and mech name */
-  if (vio->write_packet(vio, (unsigned char *)first_packet, first_packet_len))
+  if (vio->write_packet(vio, (unsigned char *)first_packet, (int)first_packet_len))
   {
     return CR_ERROR;
   }

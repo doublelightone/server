@@ -66,13 +66,13 @@ void init_sql_alloc(MEM_ROOT *mem_root, uint block_size, uint pre_alloc,
 }
 
 
-char *sql_strmake_with_convert(THD *thd, const char *str, size_t arg_length,
+char *sql_strmake_with_convert(THD *thd, const char *str, uint arg_length,
 			       CHARSET_INFO *from_cs,
-			       size_t max_res_length,
-			       CHARSET_INFO *to_cs, size_t *result_length)
+			       uint max_res_length,
+			       CHARSET_INFO *to_cs, uint *result_length)
 {
   char *pos;
-  size_t new_length= to_cs->mbmaxlen*arg_length;
+  uint new_length= to_cs->mbmaxlen*arg_length;
   max_res_length--;				// Reserve place for end null
 
   set_if_smaller(new_length, max_res_length);

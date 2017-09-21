@@ -120,7 +120,7 @@ public:
     : m_db(db), m_name(name), m_explicit_name(use_explicit_name)
   {
     if (lower_case_table_names && m_db.str)
-      m_db.length= my_casedn_str(files_charset_info, m_db.str);
+      m_db.length= (uint)my_casedn_str(files_charset_info, m_db.str);
     m_qname.str= 0;
     m_qname.length= 0;
   }

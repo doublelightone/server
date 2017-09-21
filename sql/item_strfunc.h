@@ -25,7 +25,7 @@
 #pragma interface			/* gcc class implementation */
 #endif
 
-extern size_t username_char_length;
+extern uint32 username_char_length;
 
 class MY_LOCALE;
 

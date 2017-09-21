@@ -2955,7 +2955,7 @@ public:
     context_stack.pop();
   }
 
-  bool copy_db_to(char **p_db, size_t *p_db_length) const;
+  bool copy_db_to(char **p_db, uint *p_db_length) const;
 
   Name_resolution_context *current_context()
   {

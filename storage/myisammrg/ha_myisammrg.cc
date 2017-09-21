@@ -261,7 +261,7 @@ extern "C" int myisammrg_parent_open_callback(void *callback_param,
     }
     else
     {
-      table_name_length= strlen(filename);
+      table_name_length= (uint)strlen(filename);
       table_name= strmake_root(&ha_myrg->children_mem_root, filename,
                                table_name_length);
     }

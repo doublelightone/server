@@ -98,7 +98,7 @@ public:
   void get_wild_ignore_table(String* str);
 
   bool rewrite_db_is_empty();
-  const char* get_rewrite_db(const char* db, size_t *new_len);
+  const char* get_rewrite_db(const char* db, uint *new_len);
   void copy_rewrite_db(Rpl_filter *from);
 
   I_List<i_string>* get_do_db();

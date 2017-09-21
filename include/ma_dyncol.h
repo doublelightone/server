@@ -48,7 +48,7 @@ typedef struct st_dynamic_string
 struct st_mysql_lex_string
 {
   char *str;
-  size_t length;
+  unsigned int length;
 };
 typedef struct st_mysql_lex_string MYSQL_LEX_STRING;
 typedef struct st_mysql_lex_string LEX_STRING;

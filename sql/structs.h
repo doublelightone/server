@@ -212,7 +212,7 @@ typedef struct	st_lex_user {
     if (is_role())
       *l= user;
     else
-      l->length= strxmov(l->str= buf, user.str, "@", host.str, NullS) - buf;
+      l->length= (uint)(strxmov(l->str= buf, user.str, "@", host.str, NullS) - buf);
   }
   void reset_auth()
   {

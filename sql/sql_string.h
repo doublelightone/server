@@ -681,7 +681,7 @@ public:
     DBUG_ASSERT(Alloced_length >= (str_length + length +
                                    net_length_size(length)));
     q_net_store_length(length);
-    q_append((const char *)from, length);
+    q_append((const char *)from, (uint32)length);
   }
 };
 

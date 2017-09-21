@@ -391,8 +391,8 @@ void field_unpack(String *to, Field *field, const uchar *rec, uint max_length,
                                char_length)) < tmp.length())
         tmp.length(charpos);
     }
-    if (max_length < field->pack_length())
-      tmp.length(min(tmp.length(),max_length));
+    if (max_length < field->pack_length() && max_length < tmp.length())
+      tmp.length(max_length);
     ErrConvString err(&tmp);
     to->append(err.ptr());
   }

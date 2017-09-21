@@ -83,7 +83,7 @@ int show_create_table(THD *thd, TABLE_LIST *table_list, String *packet,
 int copy_event_to_schema_table(THD *thd, TABLE *sch_table, TABLE *event_table);
 
 bool append_identifier(THD *thd, String *packet, const char *name,
-		       uint length);
+		       size_t length);
 void mysqld_list_fields(THD *thd,TABLE_LIST *table, const char *wild);
 int mysqld_dump_create_info(THD *thd, TABLE_LIST *table_list, int fd);
 bool mysqld_show_create_get_fields(THD *thd, TABLE_LIST *table_list,
@@ -138,7 +138,7 @@ const char* get_one_variable(THD *thd, const SHOW_VAR *variable,
                              size_t *length);
 
 /* These functions were under INNODB_COMPATIBILITY_HOOKS */
-int get_quote_char_for_identifier(THD *thd, const char *name, uint length);
+int get_quote_char_for_identifier(THD *thd, const char *name, size_t length);
 THD *find_thread_by_id(longlong id, bool query_id= false);
 
 class select_result_explain_buffer;

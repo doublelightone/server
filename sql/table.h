@@ -779,9 +779,9 @@ struct TABLE_SHARE
       part for temporary tables.
     */
     db.str=            table_cache_key.str;
-    db.length=         strlen(db.str);
+    db.length=         (uint)strlen(db.str);
     table_name.str=    db.str + db.length + 1;
-    table_name.length= strlen(table_name.str);
+    table_name.length= (uint)strlen(table_name.str);
   }
 
 
@@ -1749,9 +1749,9 @@ struct TABLE_LIST
   {
     bzero((char*) this, sizeof(*this));
     db= (char*) db_name_arg;
-    db_length= db_length_arg;
+    db_length= (uint)db_length_arg;
     table_name= (char*) table_name_arg;
-    table_name_length= table_name_length_arg;
+    table_name_length= (uint)table_name_length_arg;
     alias= (char*) (alias_arg ? alias_arg : table_name_arg);
     lock_type= lock_type_arg;
     mdl_request.init(MDL_key::TABLE, db, table_name,
@@ -2026,8 +2026,8 @@ struct TABLE_LIST
   thr_lock_type lock_type;
   uint		outer_join;		/* Which join type */
   uint		shared;			/* Used in multi-upd */
-  size_t        db_length;
-  size_t        table_name_length;
+  uint     db_length;
+  uint     table_name_length;
   bool          updatable;		/* VIEW/TABLE can be updated now */
   bool		straight;		/* optimize with prev table */
   bool          updating;               /* for replicate-do/ignore table */

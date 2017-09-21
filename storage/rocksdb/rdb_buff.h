@@ -228,7 +228,7 @@ inline void rdb_netbuf_read_gl_index(const uchar **netbuf_ptr,
 
 class Rdb_string_reader {
   const char *m_ptr;
-  uint m_len;
+  size_t m_len;
 
 private:
   Rdb_string_reader &operator=(const Rdb_string_reader &) = default;
@@ -310,7 +310,7 @@ public:
     }
   }
 
-  uint remaining_bytes() const { return m_len; }
+  size_t remaining_bytes() const { return m_len; }
 
   /*
     Return pointer to data that will be read by next read() call (if there is
