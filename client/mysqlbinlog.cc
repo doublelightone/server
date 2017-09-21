@@ -3164,6 +3164,9 @@ struct encryption_service_st encryption_handler=
   the server
 */
 
+#define MYSQL_TYPE_BLOB_COMPRESSED 140
+#define MYSQL_TYPE_VARCHAR_COMPRESSED 141
+
 #include "rpl_tblmap.cc"
 #undef TABLE
 #include "my_decimal.h"
